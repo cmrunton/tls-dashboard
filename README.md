@@ -24,9 +24,8 @@ Take a look at a live example page [here on GitLab][1]. Screenshot is below.
 ![Example dashboard](https://raw.githubusercontent.com/cmrunton/tls-dashboard/master/screenshot.png)  
 
 ## TODO
-1. Comment the module functions  
-2. Separate the host_list into another file that can be read and versioned on its own (useful for large deployments, if you're managing 1,000s of certs)  
-3. Error handling for when the connection fails (right now the script hangs/exits with an uncaught error)  
+1. Separate the host_list into another file that can be read and versioned on its own (useful for large deployments, if you're managing 1,000s of certs)  
+2. Error handling for when the connection fails (right now the script hangs/exits with an uncaught error)  
 
 
 [1]:https://pages.runtondev.com/tls-dashboard/
