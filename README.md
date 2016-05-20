@@ -28,4 +28,4 @@ Take a look at a live example page [here on GitLab][1]. Screenshot is below.
 2. Error handling for when the connection fails (right now the script hangs/exits with an uncaught error)  
 
 
-[1]:https://pages.runtondev.com/tls-dashboard/
+[1]:https://craine.gitlab.io/tls-dashboard/
