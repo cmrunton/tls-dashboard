@@ -7,23 +7,16 @@
 
 var https = require('https');
 const fs = require('fs');
+const monitored_hosts = require('./monitored_hosts');
 
 const directory = process.argv[2]+'/';
 const file_name = 'certificates.js';
 const run_date = new Date().toDateString();
-var host_list = [
-  'www.google.com',
-  'www.twitter.com',
-  'www.github.com',
-  'www.bitbucket.com',
-  'news.ycombinator.com',
-  'barnacl.es'
-  ];
 var output = {};
 var iteration = 1;
 
 // Run the module
-host_list.forEach(get_cert_parameters)
+monitored_hosts.forEach(get_cert_parameters)
 
 /**  
  * Creates a connection to the host, and then reads the resulting peer certificate to extract the desired info
@@ -100,11 +93,10 @@ function add_cert_details(object, host) {
  *   otherwise log the iteration to the console and increment the count
  */
 function check_iterations() {
-  if (iteration === host_list.length) {
+  if (iteration === monitored_hosts.length) {
     write_results();
     assert(true, iteration+' of '+host_list.length+' urls complete.');
   } else {
-    console.log(iteration+' of '+host_list.length+' urls complete.');
     iteration++;
   }
 };
