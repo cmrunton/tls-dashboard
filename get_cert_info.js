@@ -7,13 +7,13 @@
 
 var https = require('https');
 const fs = require('fs');
+const config = require('./config');
 const monitored_hosts = require('./monitored_hosts');
 
-const directory = process.argv[2]+'/';
-const file_name = 'certificates.js';
 const run_date = new Date().toDateString();
-var output = {};
-var iteration = 1;
+var output = {},
+  iteration = 1,
+  errors = 0;
 
 // Run the module
 monitored_hosts.forEach(get_cert_parameters)
@@ -105,7 +105,7 @@ function check_iterations() {
  * Writes out the final object to a file, along with the run date to be used by the HTML page later
  */
 function write_results() {
-  fs.writeFile(directory+file_name, 'var run_date = \''+run_date+'\'; \nvar cert_info = '+JSON.stringify(output, null, 2), function(err) {
+  fs.writeFile(config.output_file.path+config.output_file.name, 'var run_date = \''+run_date+'\'; \nvar cert_info = '+JSON.stringify(output, null, 2), function(err) {
     // If the write errored out, notify
     if (err) { 
       console.log('Error writing file. \n');
