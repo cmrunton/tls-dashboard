@@ -5,7 +5,6 @@ var hosts = [
   'www.bitbucket.com',
   'news.ycombinator.com',
   'barnacl.es',
-  'vsaq.dev',
   'example.dev',
 ];
 module.exports = hosts;
