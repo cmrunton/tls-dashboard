@@ -27,10 +27,11 @@ monitored_hosts.forEach(get_cert_parameters)
  */
 function get_cert_parameters(element, index, array) {
   var options = {
-    host: element,
+    hostname: element,
     port: 443,
     method: 'GET'
   };
+
   var req = https.request(options, function(res) {
     var cert = res.connection.getPeerCertificate();
     var parsed = {
