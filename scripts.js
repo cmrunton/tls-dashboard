@@ -44,6 +44,8 @@ $(function () {
       json.background = 'card-inverse card-danger';
     } else if (element.info.days_left  > 30 && element.info.days_left <= 60 ) {
       json.background = 'card-inverse card-warning';
+    } else if (element.info.days_left  === "??") {
+      json.background = 'card-inverse card-info';
     } else {
       json.background = 'card-inverse card-success';
     }
