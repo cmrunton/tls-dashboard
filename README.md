@@ -38,6 +38,8 @@ Take a look at a live example page [here on GitLab][1]. Screenshots below.
 2. Slack integration?  
 
 ## Dependencies
+The node module has no dependencies external to the node core. The following dependencies are provided for the web service to render properly.
+
 * jQuery v2.2.2  
 * Handlebars v4.0.5  
 * Bootstrap v4.0.0-alpha (CSS only)  
