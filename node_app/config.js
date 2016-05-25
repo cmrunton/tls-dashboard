@@ -1,7 +1,7 @@
 var config = {
   connection_timeout : 5000,
   output_file : {
-    path: './',
+    path: '../web_service/js/tls-dashboard/',
     name: 'certificates.js'
   }
 };
