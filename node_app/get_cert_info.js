@@ -67,7 +67,7 @@ function get_cert_parameters(element, index, array) {
 
     if (e.code ==='ECONNREFUSED') {
       // The connection was refused by the server (ex. 443 not open, not resonding, etc.)
-      assert(false, 'Connection to '+element+' refused')
+      assert(false, 'Connection to '+element+' refused');
       var parsed = {
         'server': element,
         'subject': {
@@ -88,7 +88,7 @@ function get_cert_parameters(element, index, array) {
 
     } else if (e.code ==='ECONNRESET') {
       // The connection to the server timed out
-      assert(false, 'Connection to '+element+' timed out')
+      assert(false, 'Connection to '+element+' timed out');
       var parsed = {
         'server': element,
         'subject': {
@@ -102,6 +102,48 @@ function get_cert_parameters(element, index, array) {
         },
         'info': {
           'days_left': '??'
+        }
+      };
+      add_cert_details(parsed, iteration);
+      check_iterations();
+    }  else if (e.reason.startsWith('Host: '+element+'. is not in the cert\'s altnames')) {
+      // There is a hostname mismatch between the cert and the server
+      assert(false, element+' had a hostname mismatch');
+      var parsed = {
+        'server': element,
+        'subject': {
+          'org': 'Unknown',
+          'common_name': 'Unknown',
+          'sans': 'Unknown'
+        }, 
+        'issuer': {
+          'org': 'Unknown',
+          'common_name': 'Hostname mismatch'
+        },
+        'info': {
+          'days_left': '??'
+        }
+      };
+      add_cert_details(parsed, iteration);
+      check_iterations();
+    } else {
+      var err = e;
+      // Catchall for all other errors to prevent the script bombing out
+      assert(false, 'Connection to '+element+' errored out');
+      var parsed = {
+        'server': element,
+        'subject': {
+          'org': 'Unknown',
+          'common_name': 'Unknown',
+          'sans': 'Unknown'
+        }, 
+        'issuer': {
+          'org': 'Unknown',
+          'common_name': ''
+        },
+        'info': {
+          'days_left': '??'
+          'common_name': 'Unspecified error'
         }
       };
       add_cert_details(parsed, iteration);
