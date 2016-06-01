@@ -142,7 +142,7 @@ function get_cert_parameters(element, index, array) {
           'common_name': ''
         },
         'info': {
-          'days_left': '??'
+          'days_left': '??',
           'common_name': 'Unspecified error'
         }
       };
