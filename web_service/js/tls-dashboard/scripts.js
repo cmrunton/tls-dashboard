@@ -9,10 +9,10 @@ $(function () {
   });
   
   var card_html = String()
-    +'<div class="col-xs-12 col-md-6 col-xl-4">'
+    +'<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">'
     +'  <div class="card text-xs-center" style="border-color:#333;">'
-    +'    <div class="card-header" style="overflow:hidden;">'
-    +'      <h4 class="text-muted" style="margin-bottom:0;">{{server}}</h4>'
+    +'    <div class="card-header" style="">'
+    +'      <h4 class="text-muted" style="margin-bottom:0;padding-bottom:.25rem;;overflow:hidden;text-overflow:ellipsis;">{{server}}</h4>'
     +'    </div>'
     +'    <div class="card-block {{background}}">'
     +'      <h1 class="card-text display-4" style="margin-top:0;margin-bottom:-1rem;">{{days_left}}</h1>'
@@ -20,7 +20,7 @@ $(function () {
     +'    </div>'
     +'    <div class="card-footer">'
     +'      <h6 class="text-muted" style="margin-bottom:.5rem;">Issued by: {{issuer}}</h6>'
-    +'      <h6 class="text-muted" style=""><small>{{issuer_cn}}</small></h6>'
+    +'      <h6 class="text-muted" style="overflow:hidden;text-overflow:ellipsis;"><small>{{issuer_cn}}</small></h6>'
     +'      <h6 class="text-muted" style="margin-bottom:0;"><small>{{common_name}}</small></h6>'
     +'    </div>'
     +'  </div>'
