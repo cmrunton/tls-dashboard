@@ -1,10 +1,12 @@
 var hosts = [
   'www.google.com',
   'www.twitter.com',
-  'www.github.com',
-  'www.bitbucket.com',
-  'news.ycombinator.com',
-  'barnacl.es',
+  'sha256.badssl.com',
+  'expired.badssl.com',
+  'self-signed.badssl.com',
+  'wrong.host.badssl.com',
+  'incomplete-chain.badssl.com',
   'example.dev',
+  'vsaq.dev'
 ];
 module.exports = hosts;
