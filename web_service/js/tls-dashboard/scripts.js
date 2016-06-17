@@ -3,7 +3,7 @@ $(function () {
   
   var sorted_certificates = Object.keys(cert_info)
     .sort(function( a, b ) {
-      return cert_info[a].info.days_left - cert_info[b].info.days_left;
+      return cert_info[a].info.sort_order - cert_info[b].info.sort_order;
     }).map(function(sortedKey) {
       return cert_info[sortedKey];
   });
@@ -39,16 +39,24 @@ $(function () {
       'issuer': element.issuer.org,
       'common_name': element.subject.common_name,
       'issuer_cn': element.issuer.common_name
-    }
-    if (element.info.days_left <= 30 ){
-      json.background = 'card-inverse card-danger';
-    } else if (element.info.days_left  > 30 && element.info.days_left <= 60 ) {
-      json.background = 'card-inverse card-warning';
-    } else if (element.info.days_left  === "??") {
-      json.background = 'card-inverse card-info';
-    } else {
-      json.background = 'card-inverse card-success';
-    }
+    };
+    switch (element.info.background_class) {
+      case "danger":
+        json.background = 'card-inverse card-danger';
+        break;
+      case "warning":
+        json.background = 'card-inverse card-warning';
+        break;
+      case "info":
+        json.background = 'card-inverse card-info';
+        break;
+      case "success":
+        json.background = 'card-inverse card-success';
+        break;
+      default:
+        json.background = 'card-inverse card-info';
+        break;
+    };
     insert_card(json);
 
   });

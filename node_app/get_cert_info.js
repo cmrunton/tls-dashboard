@@ -48,9 +48,20 @@ function get_cert_parameters(element, index, array) {
       'info': {
         'valid_from': parse_date(cert.valid_from),
         'valid_to': parse_date(cert.valid_to),
-        'days_left': get_days_left(cert.valid_to)
+        'days_left': get_days_left(cert.valid_to),
+        'sort_order': get_days_left(cert.valid_to),
+        'background_class': ''
       }
     };
+
+    if (parsed.info.days_left <= 30 ){
+      parsed.info.background_class = 'danger';
+    } else if (parsed.info.days_left  > 30 && parsed.info.days_left <= 60 ) {
+      parsed.info.background_class = 'warning';
+    } else {
+      parsed.info.background_class = 'success';
+    };
+
     add_cert_details(parsed, iteration);
     check_iterations();
   });
