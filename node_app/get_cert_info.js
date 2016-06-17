@@ -64,91 +64,78 @@ function get_cert_parameters(element, index, array) {
   req.on('error', function(e) {
     // Increment the error count for the final output
     errors++;
+    var parsed = {
+      'server': element,
+      'subject': {
+        'org': 'Unknown',
+        'common_name': '',
+        'sans': 'Unknown'
+      }, 
+      'issuer': {
+        'org': 'Unknown',
+        'common_name': ''
+      },
+      'info': {
+        'days_left': '',
+        'sort_order': 100000,
+        'background_class': ''
+      }
+    };
 
-    if (e.code ==='ECONNREFUSED') {
-      // The connection was refused by the server (ex. 443 not open, not resonding, etc.)
-      assert(false, 'Connection to '+element+' refused');
-      var parsed = {
-        'server': element,
-        'subject': {
-          'org': 'Unknown',
-          'common_name': 'Unknown',
-          'sans': 'Unknown'
-        }, 
-        'issuer': {
-          'org': 'Unknown',
-          'common_name': 'Last check connection refused'
-        },
-        'info': {
-          'days_left': '??'
-        }
+    if (e.hasOwnProperty('code')) {
+      switch (e.code) {
+        case 'CERT_HAS_EXPIRED':
+          assert(false, element+' certificate expired.');
+          parsed.subject.common_name = 'The certificate has expired';
+          parsed.issuer.common_name = e.code;
+          parsed.info.days_left = '0';
+          parsed.info.sort_order = 0;
+          parsed.info.background_class = 'danger';
+          break;
+        case 'ECONNRESET':
+          assert(false, element+' connection timed out or was reset.');
+          parsed.subject.common_name = 'The connection was reset by the server or timed out';
+          parsed.issuer.common_name = e.code;
+          parsed.info.days_left = '--';
+          parsed.info.background_class = 'info';
+          break;
+        case 'ECONNREFUSED':
+          assert(false, element+' connection refused by server.');
+          parsed.subject.common_name = 'The connection was refused by the remote server';
+          parsed.issuer.common_name = e.code;
+          parsed.info.days_left = '--';
+          parsed.info.background_class = 'info';
+          break;
+        case 'UNABLE_TO_VERIFY_LEAF_SIGNATURE':
+          assert(false, element+' self-signed or incomplete certificate chain.');
+          parsed.subject.common_name = 'The server provided a self-signed certificate or the provided certificate chain was incomplete';
+          parsed.issuer.common_name = e.code;
+          parsed.info.days_left = '--';
+          parsed.info.background_class = 'info';
+          break;
+        default:
+          assert(false, element+' unspecified error.');
+          parsed.subject.common_name = 'An unspecified error occured';
+          parsed.issuer.common_name = e.code;
+          parsed.info.days_left = '--';
+          parsed.info.background_class = 'info';
+          break;
       };
-      add_cert_details(parsed, iteration);
-      check_iterations();
 
-    } else if (e.code ==='ECONNRESET') {
-      // The connection to the server timed out
-      assert(false, 'Connection to '+element+' timed out');
-      var parsed = {
-        'server': element,
-        'subject': {
-          'org': 'Unknown',
-          'common_name': 'Unknown',
-          'sans': 'Unknown'
-        }, 
-        'issuer': {
-          'org': 'Unknown',
-          'common_name': 'Last check timed out'
-        },
-        'info': {
-          'days_left': '??'
-        }
-      };
-      add_cert_details(parsed, iteration);
-      check_iterations();
-    }  else if (e.reason.startsWith('Host: '+element+'. is not in the cert\'s altnames')) {
-      // There is a hostname mismatch between the cert and the server
-      assert(false, element+' had a hostname mismatch');
-      var parsed = {
-        'server': element,
-        'subject': {
-          'org': 'Unknown',
-          'common_name': 'Unknown',
-          'sans': 'Unknown'
-        }, 
-        'issuer': {
-          'org': 'Unknown',
-          'common_name': 'Hostname mismatch'
-        },
-        'info': {
-          'days_left': '??'
-        }
-      };
-      add_cert_details(parsed, iteration);
-      check_iterations();
-    } else {
-      var err = e;
-      // Catchall for all other errors to prevent the script bombing out
-      assert(false, 'Connection to '+element+' errored out');
-      var parsed = {
-        'server': element,
-        'subject': {
-          'org': 'Unknown',
-          'common_name': 'Unknown',
-          'sans': 'Unknown'
-        }, 
-        'issuer': {
-          'org': 'Unknown',
-          'common_name': ''
-        },
-        'info': {
-          'days_left': '??',
-          'common_name': 'Unspecified error'
-        }
-      };
-      add_cert_details(parsed, iteration);
-      check_iterations();
+    } else if (e.hasOwnProperty('reason')) {
+      switch (e.reason) {
+        default:
+          assert(false, element+' hostname mismatch.');
+          parsed.subject.common_name = 'There was mismatch between the requested hostname and the certificate presented by the server';
+          parsed.issuer.common_name = 'HOSTNAME_MISMATCH';
+          parsed.info.days_left = '--';
+          parsed.info.background_class = 'info';
+          break;
+      }
+
     }
+    add_cert_details(parsed, iteration);
+    check_iterations();
   })
 
   // Set the timeout threshold for the https connection. Set in config.js, default 5000ms

@@ -1,7 +1,7 @@
 # tls-dashboard
 A dashboard written in JavaScript &amp; HTML to check the remaining time before a TLS certificate expires. A combination of a Node module and an HTML/CSS/JS webpage to display the info. 
 
-**Version:** 1.1.0
+![version](https://img.shields.io/badge/version-1.2.0-brightgreen.svg?style=flat-square)
 
 ## Node Setup
 ### `node_app/config.js`
@@ -34,8 +34,7 @@ To get the web service started on a remote server, you'll need to either move th
 ## Example
 Take a look at a live example page [here on GitLab][1]. Screenshots below. 
 
-![Example dashboard](https://raw.githubusercontent.com/cmrunton/tls-dashboard/master/screenshot.png)  
-![Example dashboard](https://raw.githubusercontent.com/cmrunton/tls-dashboard/master/screenshot_2.png)  
+![Example dashboard](https://raw.githubusercontent.com/cmrunton/tls-dashboard/master/tls-dashboard.png)  
 
 ## TODO
 1. Database integration?  
