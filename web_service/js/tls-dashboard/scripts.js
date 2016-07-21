@@ -1,15 +1,15 @@
 $(function () {
   $('#created_date').html(run_date);
-  
+
   var sorted_certificates = Object.keys(cert_info)
     .sort(function( a, b ) {
       return cert_info[a].info.sort_order - cert_info[b].info.sort_order;
     }).map(function(sortedKey) {
       return cert_info[sortedKey];
   });
-  
+
   var card_html = String()
-    +'<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">'
+    +'<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" data-category="{{category}}">'
     +'  <div class="card text-xs-center" style="border-color:#333;">'
     +'    <div class="card-header" style="">'
     +'      <h4 class="text-muted" style="margin-bottom:0;padding-bottom:.25rem;;overflow:hidden;text-overflow:ellipsis;">{{server}}</h4>'
@@ -25,7 +25,7 @@ $(function () {
     +'    </div>'
     +'  </div>'
     +'</div>';
-  
+
   function insert_card(json) {
     var card_template = Handlebars.compile(card_html),
       html = card_template(json);
@@ -43,21 +43,35 @@ $(function () {
     switch (element.info.background_class) {
       case "danger":
         json.background = 'card-inverse card-danger';
+        json.category = 'danger';
         break;
       case "warning":
         json.background = 'card-inverse card-warning';
+        json.category = 'warning';
         break;
       case "info":
         json.background = 'card-inverse card-info';
+        json.category = 'info';
+        break;
+      case "error":
+        json.background = 'card-inverse card-info';
+        json.category = 'error';
         break;
       case "success":
         json.background = 'card-inverse card-success';
+        json.category = 'normal';
         break;
       default:
         json.background = 'card-inverse card-info';
+        json.category = 'info';
         break;
     };
     insert_card(json);
 
   });
+
+  function update_visible_certs() {
+    $('[data-category="'+$(this).val()+'"]').toggle();
+  }
+  $('input[type=checkbox]').change(update_visible_certs);
 });

@@ -108,28 +108,28 @@ function get_cert_parameters(element, index, array) {
           parsed.subject.common_name = 'The connection was reset by the server or timed out';
           parsed.issuer.common_name = e.code;
           parsed.info.days_left = '--';
-          parsed.info.background_class = 'info';
+          parsed.info.background_class = 'error';
           break;
         case 'ECONNREFUSED':
           assert(false, element+' connection refused by server.');
           parsed.subject.common_name = 'The connection was refused by the remote server';
           parsed.issuer.common_name = e.code;
           parsed.info.days_left = '--';
-          parsed.info.background_class = 'info';
+          parsed.info.background_class = 'error';
           break;
         case 'UNABLE_TO_VERIFY_LEAF_SIGNATURE':
           assert(false, element+' self-signed or incomplete certificate chain.');
           parsed.subject.common_name = 'The server provided a self-signed certificate or the provided certificate chain was incomplete';
           parsed.issuer.common_name = e.code;
           parsed.info.days_left = '--';
-          parsed.info.background_class = 'info';
+          parsed.info.background_class = 'error';
           break;
         default:
           assert(false, element+' unspecified error.');
           parsed.subject.common_name = 'An unspecified error occured';
           parsed.issuer.common_name = e.code;
           parsed.info.days_left = '--';
-          parsed.info.background_class = 'info';
+          parsed.info.background_class = 'error';
           break;
       };
 
@@ -140,7 +140,7 @@ function get_cert_parameters(element, index, array) {
           parsed.subject.common_name = 'There was mismatch between the requested hostname and the certificate presented by the server';
           parsed.issuer.common_name = 'HOSTNAME_MISMATCH';
           parsed.info.days_left = '--';
-          parsed.info.background_class = 'info';
+          parsed.info.background_class = 'error';
           break;
       }
 
