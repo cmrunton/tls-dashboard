@@ -1,8 +1,21 @@
 $(function () {
   // Local vars
   var typeahead_hostnames = [];
+  var filters = {
+    'categories': {
+      'normal': true,
+      'warning': true,
+      'danger': true,
+      'error': true,
+      'info': true,
+    },
+    'hostname': ''
+  };
+
+  // Place the run date into the header
   $('#created_date').html(run_date);
 
+  // Sort the monitored hosts object into an array from fewest days to most.
   var sorted_certificates = Object.keys(cert_info)
     .sort(function( a, b ) {
       return cert_info[a].info.sort_order - cert_info[b].info.sort_order;
@@ -10,6 +23,7 @@ $(function () {
       return cert_info[sortedKey];
   });
 
+  // Handlebars template for the cert cards
   var card_html = String()
     +'<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3 cert_card" data-category="{{category}}" data-hostname="{{server}}" data-visible="true">'
     +'  <div class="card text-xs-center" style="border-color:#333;">'
@@ -27,6 +41,7 @@ $(function () {
     +'    </div>'
     +'  </div>'
     +'</div>';
+
 
   function insert_card(json) {
     var card_template = Handlebars.compile(card_html),
@@ -73,10 +88,18 @@ $(function () {
 
   });
 
+  $('input[type=checkbox]').change(function() {
+    if ($(this).is(':checked')) {
+      var val = $(this).val();
+      filters.categories[val] = true;
+      refresh_cards();
+    } else {
+      var val = $(this).val();
+      filters.categories[val] = false;
+      refresh_cards();
+    }
   });
 
-  function update_visible_certs() {
-    $('[data-category="'+$(this).val()+'"]').toggle();
   /**
    * Initilizes the hostname typeahead
    */
@@ -98,6 +121,28 @@ $(function () {
   };
 
   create_typeahead();
+
+  $('.typeahead').on('typeahead:change typeahead:select typeahead:autocomplete blur', function() {
+    filters.hostname = $('#hostnames').val();
+    refresh_cards();
+  })
+
+  function refresh_cards() {
+    if (filters.hostname === '') {
+      for (var key in filters.categories) {
+        if (filters.categories[key] === true) {
+          $('[data-category="'+key+'"].cert_card').fadeIn();
+        } else {
+          $('[data-category="'+key+'"].cert_card').hide();
+        }
+      }
+    } else {
+      $('.cert_card').hide();
+      for (var key in filters.categories) {
+        if (filters.categories[key] === true) {
+          $('[data-category="'+key+'"][data-hostname="'+filters.hostname+'"].cert_card').fadeIn();
+        }
+      }
+    }
   }
-  $('input[type=checkbox]').change(update_visible_certs);
 });
