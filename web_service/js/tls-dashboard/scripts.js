@@ -1,4 +1,6 @@
 $(function () {
+  // Local vars
+  var typeahead_hostnames = [];
   $('#created_date').html(run_date);
 
   var sorted_certificates = Object.keys(cert_info)
@@ -9,7 +11,7 @@ $(function () {
   });
 
   var card_html = String()
-    +'<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" data-category="{{category}}">'
+    +'<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3 cert_card" data-category="{{category}}" data-hostname="{{server}}" data-visible="true">'
     +'  <div class="card text-xs-center" style="border-color:#333;">'
     +'    <div class="card-header" style="">'
     +'      <h4 class="text-muted" style="margin-bottom:0;padding-bottom:.25rem;;overflow:hidden;text-overflow:ellipsis;">{{server}}</h4>'
@@ -67,11 +69,35 @@ $(function () {
         break;
     };
     insert_card(json);
+    typeahead_hostnames.push(json.server);
+
+  });
 
   });
 
   function update_visible_certs() {
     $('[data-category="'+$(this).val()+'"]').toggle();
+  /**
+   * Initilizes the hostname typeahead
+   */
+  function create_typeahead() {
+    var monitored_hosts = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.nonword,
+      queryTokenizer: Bloodhound.tokenizers.nonword,
+      local: typeahead_hostnames
+    });
+
+    $('.typeahead').typeahead({
+      hint: true,
+      minLength: 2
+    },
+    {
+      name: 'hostnames',
+      source: monitored_hosts
+    });
+  };
+
+  create_typeahead();
   }
   $('input[type=checkbox]').change(update_visible_certs);
 });
