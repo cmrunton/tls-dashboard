@@ -1,7 +1,9 @@
 $(function () {
-  // Local vars
-  var typeahead_hostnames = [];
-  var filters = {
+/****************************************************
+ * Initialize local vars for use throughout the app *
+ ***************************************************/
+  var typeahead_hostnames = [],
+  filters = {
     'categories': {
       'normal': true,
       'warning': true,
@@ -10,21 +12,14 @@ $(function () {
       'info': true,
     },
     'hostname': ''
-  };
-
-  // Place the run date into the header
-  $('#created_date').html(run_date);
-
-  // Sort the monitored hosts object into an array from fewest days to most.
-  var sorted_certificates = Object.keys(cert_info)
+  },
+  sorted_certificates = Object.keys(cert_info)
     .sort(function( a, b ) {
       return cert_info[a].info.sort_order - cert_info[b].info.sort_order;
     }).map(function(sortedKey) {
       return cert_info[sortedKey];
-  });
-
-  // Handlebars template for the cert cards
-  var card_html = String()
+  }),
+  card_html = String()
     +'<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3 cert_card" data-category="{{category}}" data-hostname="{{server}}" data-visible="true">'
     +'  <div class="card text-xs-center" style="border-color:#333;">'
     +'    <div class="card-header" style="">'
@@ -42,14 +37,18 @@ $(function () {
     +'  </div>'
     +'</div>';
 
+/************************************************************
+ * Setup the functions that will be used throughout the app *
+ ************************************************************/
 
-  function insert_card(json) {
-    var card_template = Handlebars.compile(card_html),
-      html = card_template(json);
-    $('#panel').append(html);
-  };
-
-  sorted_certificates.forEach(function(element, index, array){
+  /**
+   * Creates the information needed to create a cert card for the web page
+   *
+   * @param {object} element - Contains all the relevant data on the certificate
+   * @param {int} index - The index on the array iteration
+   * @param {array} array - The full array the element ebject is part of
+   */
+ function create_card(element, index, array){
     var json = {
       'server': element.server,
       'days_left': element.info.days_left,
@@ -85,23 +84,21 @@ $(function () {
     };
     insert_card(json);
     typeahead_hostnames.push(json.server);
-
-  });
-
-  $('input[type=checkbox]').change(function() {
-    if ($(this).is(':checked')) {
-      var val = $(this).val();
-      filters.categories[val] = true;
-      refresh_cards();
-    } else {
-      var val = $(this).val();
-      filters.categories[val] = false;
-      refresh_cards();
-    }
-  });
+  };
 
   /**
-   * Initilizes the hostname typeahead
+   * Inserts a new card for a cert record using the Handlebars template above
+   *
+   * @param {object} json - Contains the informaiton on the certificate that will fill out the cert-card
+   */
+  function insert_card(json) {
+    var card_template = Handlebars.compile(card_html),
+      html = card_template(json);
+    $('#panel').append(html);
+  };
+
+  /**
+   * Initilizes the hostname typeahead for narrowing displayed results
    */
   function create_typeahead() {
     var monitored_hosts = new Bloodhound({
@@ -120,29 +117,63 @@ $(function () {
     });
   };
 
-  create_typeahead();
+  /**
+   * Updates the filters object with category preferences the user wants to display
+   */
+  function update_filter_object_categories() {
+    if ($(this).is(':checked')) {
+      var val = $(this).val();
+      filters.categories[val] = true;
+      refresh_cards();
+    } else {
+      var val = $(this).val();
+      filters.categories[val] = false;
+      refresh_cards();
+    }
+  };
 
-  $('.typeahead').on('typeahead:change typeahead:select typeahead:autocomplete blur', function() {
+  /**
+   * Updates the filters object with a hostname the user wants to display
+   */
+  function update_filter_object_hostname() {
     filters.hostname = $('#hostnames').val();
     refresh_cards();
-  })
+  };
 
+  /**
+   * Takes the information in the filters object and refreshes the displayed and hidden cards on screen
+   */
   function refresh_cards() {
-    if (filters.hostname === '') {
-      for (var key in filters.categories) {
-        if (filters.categories[key] === true) {
-          $('[data-category="'+key+'"].cert_card').fadeIn();
-        } else {
-          $('[data-category="'+key+'"].cert_card').hide();
-        }
-      }
-    } else {
-      $('.cert_card').hide();
-      for (var key in filters.categories) {
-        if (filters.categories[key] === true) {
-          $('[data-category="'+key+'"][data-hostname="'+filters.hostname+'"].cert_card').fadeIn();
-        }
-      }
-    }
-  }
+   if (filters.hostname === '') {
+     for (var key in filters.categories) {
+       if (filters.categories[key] === true) {
+         $('[data-category="'+key+'"].cert_card').fadeIn();
+       } else {
+         $('[data-category="'+key+'"].cert_card').hide();
+       }
+     }
+   } else {
+     $('.cert_card').hide();
+     for (var key in filters.categories) {
+       if (filters.categories[key] === true) {
+         $('[data-category="'+key+'"][data-hostname="'+filters.hostname+'"].cert_card').fadeIn();
+       }
+     }
+   }
+ };
+
+/***********************
+ * Bind event handlers *
+ **********************/
+  $('input[type=checkbox]').change(update_filter_object_categories);
+  $('.typeahead').on('typeahead:change typeahead:select typeahead:autocomplete blur', update_filter_object_hostname);
+
+/************************************************************
+ * Start running the program *
+ ************************************************************/
+  $('#created_date').html(run_date);
+  sorted_certificates.forEach(function(element, index, array){
+    create_card(element, index, array)
+  });
+  create_typeahead();
 });
