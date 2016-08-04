@@ -5,7 +5,7 @@ A dashboard written in JavaScript &amp; HTML to check the remaining time before 
 
 ## Node Setup
 ### `node_app/config.js`
-Contains the configuration variables for the node script.  
+Copy `node_app/example_config.js` to `node_app/config.js`. You won't need to change the defaults unless you want a special snowflake. Contains the configuration variables for the node script, as described below.  
 
 * `connection_timeout` - The time in milliseconds that node should leave a connection open without response after the socket has been assigned. Once the timeout expires, node emits a `timeout` event and aborts the connection request. Default is 5000ms.  
 * `output_file`  
@@ -14,7 +14,7 @@ Contains the configuration variables for the node script.
 
 
 ### `node_app/monitored_hosts.js`
-Contains an array of all of the hostnames that you want to monitor. 
+Copy the `node_app/example_monitored_hosts.js` to `node_app/monitored_hosts.js`. Contains an array of all of the hostnames that you want to monitor. Modify this array for all of the hosts that you want to monitor.  
 
 ### `node_app/get_cert_info.js`
 This module performs the actual HTTPS connection and evaluation of the peer certificates, and outputs the results into a flat file. There are no configuration changes needed in this file. To get things going, you can either:  
@@ -29,7 +29,7 @@ It's entirely up to you how you want to handle it.
 If you're using this on a local machine, and you haven't made any changes to the default config, then once you've ran `node get_cert_info.js` as described above, all you have to do is open the `web_service/index.html` file in your browser of choice. All of the dependencies are there and the links are relative, so you should be good to go. 
 
 ### Production
-To get the web service started on a remote server, you'll need to either move the contents of the `web_service` directory to somewhere in your web site's path, or create a symlink from the web site path back to the directory. If you move the contents, please update the `output_file.path` config value. Again, since all of the Dashbaord's dependencies are in the `web_service` directory, and the links are relative links, there's nothing else you need to change. 
+To get the web service started on a remote server, you'll need to either move the contents of the `web_service` directory to somewhere in your web site's path, or create a symlink (recommended if you're using Git to deploy) from the web site path back to the directory. If you move the contents, please update the `output_file.path` config value. Again, since all of the Dashbaord's dependencies are in the `web_service` directory, and the links are relative links, there's nothing else you need to change.
 
 ## Example
 Take a look at a live example page [here on GitLab][1]. Screenshots below. 
