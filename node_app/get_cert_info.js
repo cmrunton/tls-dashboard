@@ -1,7 +1,7 @@
 /**
  * TLS Dashboard by Craine Runton
  * Source: https://github.com/cmrunton/tls-dashboard
- * 
+ *
  * See /LICENSE for licensing details
  */
 
@@ -18,17 +18,18 @@ var output = {},
 // Run the module
 monitored_hosts.forEach(get_cert_parameters)
 
-/**  
+/**
  * Creates a connection to the host, and then reads the resulting peer certificate to extract the desired info
- * 
- * @param {string} element The 
- * @param {int} index 
- * @param {array} array The 
+ *
+ * @param {string} element The
+ * @param {int} index
+ * @param {array} array The
  */
 function get_cert_parameters(element, index, array) {
+  console.log(element);
   var options = {
-    hostname: element,
-    port: 443,
+    hostname: element.hostname,
+    port: (element.port ? element.port : 443),
     method: 'GET'
   };
 
@@ -40,7 +41,7 @@ function get_cert_parameters(element, index, array) {
         'org': cert.subject.O,
         'common_name': cert.subject.CN,
         'sans': cert.subjectaltname
-      }, 
+      },
       'issuer': {
         'org': cert.issuer.O,
         'common_name': cert.issuer.CN
@@ -81,7 +82,7 @@ function get_cert_parameters(element, index, array) {
         'org': 'Unknown',
         'common_name': '',
         'sans': 'Unknown'
-      }, 
+      },
       'issuer': {
         'org': 'Unknown',
         'common_name': ''
@@ -151,7 +152,7 @@ function get_cert_parameters(element, index, array) {
 
   // Set the timeout threshold for the https connection. Set in config.js, default 5000ms
   req.setTimeout(config.connection_timeout);
-  
+
   // End the request
   req.end();
 };
@@ -166,9 +167,9 @@ function parse_date(date_string) {
   return date;
 };
 
-/** 
+/**
  * Takes a date string and returns the nuumber of days between now and the future date
- * 
+ *
  * @param {string} date_string The human readble date string that needs to be parsed
  */
 function get_days_left(date_string) {
@@ -180,7 +181,7 @@ function get_days_left(date_string) {
 
 /**
  * Helper function to put the resolved/parsed cert info into the module output object
- * 
+ *
  * @param {object} object Contains the parsed certificate info
  * @param {string} host The name of the host that the certificate info is taken from
  */
@@ -189,7 +190,7 @@ function add_cert_details(object, host) {
 };
 
 /**
- * Checks the iteration count. If the forEach has iterated over all the hosts, then call the write_results function, 
+ * Checks the iteration count. If the forEach has iterated over all the hosts, then call the write_results function,
  *   otherwise log the iteration to the console and increment the count
  */
 function check_iterations() {
@@ -205,10 +206,10 @@ function check_iterations() {
  * Writes out the final object to a file, along with the run date to be used by the HTML page later
  */
 function write_results() {
-  fs.writeFile(config.output_file.path+config.output_file.name, 'var run_date = \''+run_date+'\'; \nvar cert_info = '+JSON.stringify(output, null, 2), function(err) {
+  fs.writeFile(__dirname+'/'+config.output_file.path+config.output_file.name, 'var run_date = \''+run_date+'\'; \nvar cert_info = '+JSON.stringify(output, null, 2), function(err) {
     // If the write errored out, notify
-    if (err) { 
-      console.log('Error writing file. \n');
+    if (err) {
+      assert(false, 'Error writing file to the specified location.');
     }
   })
 };

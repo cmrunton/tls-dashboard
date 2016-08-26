@@ -1,7 +1,9 @@
 var run_date = 'Fri Jun 17 2016';
 var cert_info = {
   "1": {
-    "server": "http-only.runtondev.com",
+    "server": {
+      "hostname":"http-only.runtondev.com"
+    },
     "subject": {
       "org": "Unknown",
       "common_name": "The connection was refused by the remote server",
@@ -18,7 +20,9 @@ var cert_info = {
     }
   },
   "2": {
-    "server": "www.google.com",
+    "server": {
+      "hostname":"www.google.com"
+    },
     "subject": {
       "org": "Google Inc",
       "common_name": "www.google.com",
@@ -37,7 +41,9 @@ var cert_info = {
     }
   },
   "3": {
-    "server": "expired.badssl.com",
+    "server": {
+      "hostname":"expired.badssl.com"
+    },
     "subject": {
       "org": "Unknown",
       "common_name": "The certificate has expired",
@@ -54,7 +60,9 @@ var cert_info = {
     }
   },
   "4": {
-    "server": "incomplete-chain.badssl.com",
+    "server": {
+      "hostname":"incomplete-chain.badssl.com"
+    },
     "subject": {
       "org": "Unknown",
       "common_name": "The server provided a self-signed certificate or the provided certificate chain was incomplete",
@@ -71,7 +79,9 @@ var cert_info = {
     }
   },
   "5": {
-    "server": "wrong.host.badssl.com",
+    "server": {
+      "hostname":"wrong.host.badssl.com"
+    },
     "subject": {
       "org": "Unknown",
       "common_name": "There was mismatch between the requested hostname and the certificate presented by the server",
@@ -88,7 +98,9 @@ var cert_info = {
     }
   },
   "6": {
-    "server": "self-signed.badssl.com",
+    "server": {
+      "hostname":"self-signed.badssl.com"
+    },
     "subject": {
       "org": "Unknown",
       "common_name": "The server provided a self-signed certificate or the provided certificate chain was incomplete",
@@ -105,7 +117,9 @@ var cert_info = {
     }
   },
   "7": {
-    "server": "sha256.badssl.com",
+    "server": {
+      "hostname":"sha256.badssl.com"
+    },
     "subject": {
       "common_name": "*.badssl.com",
       "sans": "DNS:*.badssl.com, DNS:badssl.com"
@@ -123,7 +137,9 @@ var cert_info = {
     }
   },
   "8": {
-    "server": "www.twitter.com",
+    "server": {
+      "hostname":"www.twitter.com"
+    },
     "subject": {
       "org": "Twitter, Inc.",
       "common_name": "twitter.com",
@@ -142,7 +158,9 @@ var cert_info = {
     }
   },
   "9": {
-    "server": "nonexistent.runtondev.com",
+    "server": {
+      "hostname":"nonexistent.runtondev.com"
+    },
     "subject": {
       "org": "Unknown",
       "common_name": "The connection was reset by the server or timed out",
@@ -159,7 +177,9 @@ var cert_info = {
     }
   },
   "10": {
-    "server": "warning.runtondev.com",
+    "server": {
+      "hostname":"warning.runtondev.com"
+    },
     "subject": {
       "common_name": "warning.runtondev.com",
       "sans": ""
@@ -177,7 +197,9 @@ var cert_info = {
     }
   },
   "11": {
-    "server": "danger.runtondev.com",
+    "server": {
+      "hostname":"danger.runtondev.com"
+    },
     "subject": {
       "common_name": "danger.runtondev.com",
       "sans": ""

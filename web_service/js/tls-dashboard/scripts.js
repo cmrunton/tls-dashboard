@@ -50,7 +50,7 @@ $(function () {
    */
  function create_card(element, index, array){
     var json = {
-      'server': element.server,
+      'server': element.server.hostname,
       'days_left': element.info.days_left,
       'issuer': element.issuer.org,
       'common_name': element.subject.common_name,
@@ -172,8 +172,6 @@ $(function () {
  * Start running the program *
  ************************************************************/
   $('#created_date').html(run_date);
-  sorted_certificates.forEach(function(element, index, array){
-    create_card(element, index, array)
-  });
+  sorted_certificates.forEach(create_card);
   create_typeahead();
 });
