@@ -1,7 +1,7 @@
 # tls-dashboard
 A dashboard written in JavaScript &amp; HTML to check the remaining time before a TLS certificate expires. A combination of a Node module and an HTML/CSS/JS webpage to display the info.
 
-![version](https://img.shields.io/badge/version-2.0.0-brightgreen.svg?style=flat-square) [Release Notes](notes)
+![version](https://img.shields.io/badge/version-2.0.0-brightgreen.svg?style=flat-square) [Release Notes][notes]
 
 ## Node Setup
 ### `node_app/config.js`
@@ -43,9 +43,10 @@ to
 and that will bring back the lightness.
 
 ## Example
-Take a look at a live example pages on GitLab. [Dark one here](dark), and the [light one here](light). Screenshots below.
+Take a look at a live example pages on GitLab. [Dark one here][dark], and the [light one here][light]. Screenshots below.
 
-![Example dashboard](https://raw.githubusercontent.com/cmrunton/tls-dashboard/master/tls-dashboard-dark.png)  
+![Example dark dashboard](https://raw.githubusercontent.com/cmrunton/tls-dashboard/master/tls-dashboard-dark.png)  
+![Example light dashboard](https://raw.githubusercontent.com/cmrunton/tls-dashboard/master/tls-dashboard-light.png)  
 
 ## TODO
 1. Database integration?  
@@ -62,7 +63,7 @@ The node module has no dependencies external to the node core. The following dep
 
 
 ## Credits
-Thanks to [flatlogic on GitHub](2) for the checkbox styling, the [Bootstrap team](3), the [jQuery team](4), the [Handlebars team](5), and the [Twitter Typeahead team](6).
+Thanks to [flatlogic on GitHub][2] for the checkbox styling, the [Bootstrap team][3], the [jQuery team][4], the [Handlebars team][5], and the [Twitter Typeahead team][6].
 
 [notes]:./release-notes.md
 [dark]:https://pages.runtondev.com/tls-dashboard/demo-dark/
