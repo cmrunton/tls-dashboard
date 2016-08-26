@@ -2,7 +2,6 @@
 
 # 2.0.0
 **Aug 26, 2016**
------
 * Added Typeahead search box to narrow the selection to a single hostnames
 * Added filtering checkboxes to show/hide specific types of responses
 * Added a dark theme for people who like that (it's default now to)
@@ -13,5 +12,4 @@
 
 
 # 1.0.0
------
 Initial release
