@@ -1,7 +1,7 @@
 # tls-dashboard
 A dashboard written in JavaScript &amp; HTML to check the remaining time before a TLS certificate expires. A combination of a Node module and an HTML/CSS/JS webpage to display the info.
 
-![version](https://img.shields.io/badge/version-1.2.0-brightgreen.svg?style=flat-square)
+![version](https://img.shields.io/badge/version-2.0.0-brightgreen.svg?style=flat-square) [Release Notes](notes)
 
 ## Node Setup
 ### `node_app/config.js`
@@ -31,22 +31,44 @@ If you're using this on a local machine, and you haven't made any changes to the
 ### Production
 To get the web service started on a remote server, you'll need to either move the contents of the `web_service` directory to somewhere in your web site's path, or create a symlink (recommended if you're using Git to deploy) from the web site path back to the directory. If you move the contents, please update the `output_file.path` config value. Again, since all of the Dashbaord's dependencies are in the `web_service` directory, and the links are relative links, there's nothing else you need to change.
 
-## Example
-Take a look at a live example page [here on GitLab][1]. Screenshots below.
+#### UI theme
+The dashboard now defaults to a darker theme because I liked it better. If you want to enable the light theme again you can. Just edit line 11 of the `web_service/index.html` file from
+```html
+<link rel="stylesheet" href="./css/tls-dashboard/styles-dark.css" type="text/css" />
+```
+to
+```html
+<link rel="stylesheet" href="./css/tls-dashboard/styles-light.css" type="text/css" />
+```
+and that will bring back the lightness.
 
-![Example dashboard](https://raw.githubusercontent.com/cmrunton/tls-dashboard/master/tls-dashboard.png)  
+## Example
+Take a look at a live example pages on GitLab. [Dark one here](dark), and the [light one here](light). Screenshots below.
+
+![Example dashboard](https://raw.githubusercontent.com/cmrunton/tls-dashboard/master/tls-dashboard-dark.png)  
 
 ## TODO
 1. Database integration?  
 2. Slack integration?  
 3. Monitor CRLs  
-4. Non-standard ports/paths?
+4. Non-standard ~ports~/paths?
 
 ## Dependencies
 The node module has no dependencies external to the node core. The following dependencies are provided for the web service to render properly.
 
-* jQuery v2.2.2  
+* jQuery v3.1.0  
 * Handlebars v4.0.5  
 * Bootstrap v4.0.0-alpha (CSS only)  
 
-[1]:https://pages.runtondev.com/tls-dashboard/demo/
+
+## Credits
+Thanks to [flatlogic on GitHub](2) for the checkbox styling, the [Bootstrap team](3), the [jQuery team](4), the [Handlebars team](5), and the [Twitter Typeahead team](6).
+
+[notes]:./release-notes.md
+[dark]:https://pages.runtondev.com/tls-dashboard/demo-dark/
+[light]:https://pages.runtondev.com/tls-dashboard/demo-light/
+[2]:https://github.com/flatlogic/awesome-bootstrap-checkbox
+[3]:https://github.com/twbs/bootstrap
+[4]:http://jquery.com/
+[5]:http://handlebarsjs.com/
+[6]:https://github.com/twitter/typeahead.js
