@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="./css/tls-dashboard/styles.css" type="text/css" />
+    <link rel="stylesheet" href="./css/tls-dashboard/styles-dark.css" type="text/css" />
 
     <script src="./js/jquery/jquery-2.2.2.min.js"></script>
     <script src="./js/handlebars/handlebars-v4.0.5.min.js"></script>
@@ -18,57 +18,62 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12 text-center bg-primary"><h1>TLS Certificate Expiration Dashboard</h1></div>
-        <div class="col-xs-12 text-center bg-primary"><h3><small>Created: <span id="created_date"></span></small></h3></div>
-      </div>
-      <div class="row" style="margin-top: 1rem;">
-        <div class="col-xs-12">
-          <h4>Filter Results</h4>
+      <div class="row header">
+        <div class="col-xs-12 bg-primary">
+          <h3 >TLS Certificate Expiration Dashboard</h3>
         </div>
       </div>
-      <div class="row">
-        <div class="col-xs-12 col-md-6">
-          <p class="lead">By status:</p>
+      <div class="row pinned bg-primary">
+        <div class="col-xs-12">
+          <h5>Last Updated on <span id="created_date"></span></h5>
+          <div class="form-group input-parent">
+            <input type="text" id="hostnames"
+                    name="hostnames"
+                    class="form-control typeahead"
+                    placeholder="Search for hostname: (e.g. www.example.com)"
+                    autocomplete="off"
+                    tabindex="2">
+          </div>
+        </div>
+        <div class="col-xs-12 hidden-xs-down">
           <div class="form-inline">
             <div class="form-group">
-              <label class="form-check-label">
-                <input type="checkbox" id="response_type_3" value="danger" checked="checked"> Danger
+              <label>Show :</label>
+            </div>
+            <div class="form-group checkbox checkbox-danger">
+              <input type="checkbox" id="response_type_danger" value="danger" checked="checked" class="styled">
+              <label for="response_type_danger">
+                Danger
               </label>
             </div>
-            <div class="form-group">
-              <label class="form-check-label">
-                <input type="checkbox" id="response_type_2" value="warning" checked="checked"> Warning
+            <div class="form-group checkbox checkbox-warning">
+              <input type="checkbox" id="response_type_warning" value="warning" checked="checked" class="styled">
+              <label for="response_type_warning">
+                Warning
               </label>
             </div>
-            <div class="form-group">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" id="response_type_1" value="normal" checked="checked"> Normal
+            <div class="form-group checkbox checkbox-success">
+              <input type="checkbox" id="response_type_success" value="normal" checked="checked" class="styled">
+              <label for="form-check-response_type_success">
+                Normal
               </label>
             </div>
-            <div class="form-group">
-              <label class="form-check-label">
-                <input type="checkbox" id="response_type_4" value="info" checked="checked"> Info
+            <div class="form-group checkbox checkbox-info">
+              <input type="checkbox" id="response_type_info" value="info" checked="checked" class="styled">
+              <label for="response_type_info">
+                Info
               </label>
             </div>
-            <div class="form-group">
-              <label class="form-check-label">
-                <input type="checkbox" id="response_type_5" value="error" checked="checked"> Error
+            <div class="form-group checkbox checkbox-info">
+              <input type="checkbox" id="response_type_error" value="error" checked="checked" class="styled">
+              <label for="response_type_error">
+                Error
               </label>
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-md-6">
-          <p class="lead">By hostname:</p>
-            <div class="form-group input-parent">
-              <input type="text" id="hostnames"
-                      name="hostnames"
-                      class="form-control typeahead"
-                      placeholder="www.example.com"
-                      autocomplete="off"
-                      tabindex="2">
-            </div>
-          </div>
+      </div>
+      <div class="row">
       </div>
       <div class="row" style="margin-top: 1rem;">
         <div class="col-xs-12">
